@@ -12,10 +12,10 @@
 #include <string.h>
 
 // 문자 크기 정의
-#define CHAR_SIZE 26
+#define CHAR_SIZE 27
 
 typedef struct TrieNode {
-    struct TrieNode *children[CHAR_SIZE];
+    struct TrieNode* children[CHAR_SIZE];
     int Leaf;
 } TrieNode;
 
@@ -38,6 +38,7 @@ void insert(struct TrieNode* root, const char *key) {
 	while(*key){
 		if(*key >= 'a' && *key <= 'z'){
 			index = *key - 'a';
+			
 		}
 		else if (*key >= '0' && *key <= '9') {
     		index = *key - '0';
@@ -57,9 +58,12 @@ void insert(struct TrieNode* root, const char *key) {
 
 int search(TrieNode* root, const char *key) {
     TrieNode* node = root;
-    int len = strlen(key);
 	int index = 0;
+	if(root == NULL){
+		return 0;
+	}
 
+	
 	while(*key){
 		if(*key >= 'a' && *key <= 'z'){
 			index = *key - 'a';
@@ -70,12 +74,14 @@ int search(TrieNode* root, const char *key) {
         else if(*key == '.'){
 			index = 26;
 		}
-		if (!node->children[index]) {
+		if (node->children[index]==NULL) {
             return 0; // 주소가 Trie에 없음
         }
-        node = node->children[index];
+		node = node->children[index];
+		printf("search : %c\n",*key);
+        	key++;
 	}
-    return (node != NULL && node->Leaf);
+    return node->Leaf;
 }
 
 
