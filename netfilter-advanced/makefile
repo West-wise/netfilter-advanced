@@ -1,5 +1,3 @@
-CFLAGS += -Iuthash/src
-
 LDLIBS += -lnetfilter_queue
 
 all: 1m-block
